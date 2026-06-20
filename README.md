@@ -1,22 +1,33 @@
 # 🎓 Sistema de Consulta de Resultados ICFES
 
-Sistema web moderno para consultar resultados oficiales de exámenes ICFES (Saber 11°, Saber Pro, Saber TyT, etc.)
+Sistema web moderno para consultar resultados **REALES** de exámenes ICFES Saber 11 en Colombia.
+
+## 🌟 ¡AHORA CON API REAL DEL ICFES!
+
+✅ **Conectado a la API oficial** - Obtén tus resultados reales  
+✅ **Soporte para múltiples exámenes** - Si presentaste el examen varias veces, verás todos  
+✅ **Sistema de fallback** - Si la API oficial está caída, usa respaldo local  
+✅ **Mensajes motivacionales** - Recibe mensajes personalizados del ICFES  
+✅ **Datos 100% reales** - Ya no es demo, es producción  
 
 ## 📋 Descripción
 
-Esta es una aplicación web responsive que permite a los estudiantes consultar sus resultados de exámenes ICFES de manera rápida y segura. La interfaz está diseñada siguiendo los estándares visuales del ICFES oficial.
+Alternativa moderna y funcional para consultar resultados del ICFES cuando el sitio oficial no está disponible o está lento. Conectado directamente con la API real del ICFES.
 
 ## ✨ Características
 
+- ✅ **API REAL DEL ICFES** - Conectado con https://icfes-server.vercel.app
+- ✅ **Múltiples resultados** - Si presentaste el examen varias veces, muestra todos
+- ✅ **Sistema de fallback automático** - Si API falla, usa base de datos local
+- ✅ **Mensajes motivacionales** - Del propio ICFES
 - ✅ Interfaz moderna y profesional con colores oficiales del ICFES
 - ✅ Diseño 100% responsive (móvil, tablet, desktop)
-- ✅ Validación de datos en tiempo real
+- ✅ Validación de datos en tiempo real (fecha de nacimiento)
 - ✅ Animaciones suaves y transiciones fluidas
 - ✅ Visualización clara de resultados por materia
 - ✅ Indicadores de nivel de desempeño por competencia
-- ✅ Preparado para integración con API oficial
 - ✅ Sistema de mensajes de error amigables
-- ✅ Soporte para múltiples tipos de examen
+- ✅ Información de municipio donde presentaste el examen
 
 ## 🚀 Cómo Usar
 
@@ -49,11 +60,12 @@ Esta es una aplicación web responsive que permite a los estudiantes consultar s
 
 ### Uso de la Aplicación
 
-1. **Selecciona el tipo de documento** (CC, TI, CE, PEP)
+1. **Selecciona el tipo de documento** (TI o CC)
 2. **Ingresa el número de documento** (solo números)
-3. **Selecciona el tipo de examen** (Saber 11°, Saber Pro, etc.)
-4. **Selecciona el período de aplicación**
-5. **Haz clic en "Consultar Resultados"**
+3. **Ingresa tu fecha de nacimiento** (formato YYYY-MM-DD)
+4. **Haz clic en "Consultar Resultados"**
+
+> 💡 **Nota:** Los datos se consultan directamente de la API oficial del ICFES. Si presentaste el examen varias veces, verás todos tus resultados.
 
 ## 🧪 Datos de Prueba
 
@@ -324,11 +336,25 @@ Este proyecto es una demostración educativa. Para uso comercial o producción c
 
 ## ⚠️ Disclaimer
 
-**IMPORTANTE:** Este es un sistema de demostración con fines educativos. Los datos mostrados son ficticios. Para consultar resultados oficiales, visita el portal oficial del ICFES: [www.icfes.gov.co](https://www.icfes.gov.co) o descarga la app oficial "Mi ICFES".
+**IMPORTANTE:** Este sistema consulta datos reales del ICFES a través de una API pública. Los resultados mostrados son oficiales cuando se conecta con la API real.
+
+**Créditos API:** https://github.com/NeuDam/ICFES-WEB-CONSULTA
+
+Para consultar resultados oficiales directamente, también puedes:
+- Visitar: [www.icfes.gov.co](https://www.icfes.gov.co)
+- Descargar la app oficial: "Mi ICFES"
 
 ## 📝 Changelog
 
-### v1.0.0 (2026-06-20)
+### v2.0.0 (2026-06-20) - 🚀 PRODUCCIÓN
+- ✅ **Conectado con API real del ICFES**
+- ✅ Soporte para múltiples resultados
+- ✅ Sistema de fallback automático
+- ✅ Mensajes motivacionales oficiales
+- ✅ Información de municipio
+- ✅ Transformación automática de formatos
+
+### v1.0.0 (2026-06-20) - Demo
 - ✅ Lanzamiento inicial
 - ✅ Interfaz responsive completa
 - ✅ Sistema de consulta funcional
