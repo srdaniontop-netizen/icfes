@@ -2,11 +2,9 @@
   "name": "icfes-consulta-resultados",
   "version": "2.0.0",
   "description": "Sistema de consulta de resultados ICFES con backend de scraping",
-  "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "dev": "node server.local.js",
     "test": "echo \"No tests configured yet\" && exit 0"
   },
   "keywords": [
