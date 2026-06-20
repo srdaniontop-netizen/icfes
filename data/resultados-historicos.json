@@ -2,11 +2,34 @@
   "metadata": {
     "version": "1.0.0",
     "lastUpdate": "2026-06-20",
-    "totalRecords": 50,
+    "totalRecords": 11,
     "source": "Resultados históricos ICFES Saber 11",
     "note": "Datos reales anonimizados de estudiantes colombianos"
   },
   "resultados": [
+    {
+      "documento": "1022370252",
+      "tipoDocumento": "TI",
+      "fechaNacimiento": "06/08/2009",
+      "estudiante": "DANIEL FELIPE LEÓN MARTÍNEZ",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC202610594926",
+          "puntaje": 377,
+          "ciudad": "BOGOTÁ D.C.",
+          "fechaResultados": "2026-05-15",
+          "periodo": "2026-1",
+          "mensajeMotivacional": "¡Excelentes resultados!",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 71},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 80},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 75},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 77},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 70}
+          ]
+        }
+      ]
+    },
     {
       "documento": "1234567890",
       "tipoDocumento": "TI",
