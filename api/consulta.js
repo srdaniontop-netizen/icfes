@@ -1,5 +1,6 @@
 // API Serverless para Vercel - CON SCRAPING REAL DEL ICFES
 // Prioridad: Datos reales > Datos simulados
+import * as cheerio from 'cheerio';
 
 export default async function handler(req, res) {
   // Configurar CORS
@@ -243,73 +244,164 @@ async function scrapingICFESDirecto(document, born, young) {
   return null;
 }
 
-// Parsear HTML de resultados del ICFES
+// Parsear HTML de resultados del ICFES con Cheerio
 function parsearResultadosHTML(html) {
   try {
-    // Buscar patrones comunes en el HTML de resultados
+    const $ = cheerio.load(html);
     
-    // Patrón 1: Buscar nombre del estudiante
-    const nombreMatch = html.match(/(?:nombre|estudiante)["\s:]*([A-ZÁÉÍÓÚÑ\s]{10,50})/i) ||
-                       html.match(/class=["']nombre["'][^>]*>([A-ZÁÉÍÓÚÑ\s]+)</i) ||
-                       html.match(/<h2[^>]*>([A-ZÁÉÍÓÚÑ\s]{10,50})<\/h2>/i);
+    // ESTRATEGIA 1: Buscar por selectores comunes
+    const selectoresNombre = [
+      '.nombre-estudiante',
+      '#nombreEstudiante',
+      '[data-nombre]',
+      'h2.nombre',
+      '.student-name',
+      '.resultado-nombre'
+    ];
     
-    const nombreEstudiante = nombreMatch ? nombreMatch[1].trim() : null;
+    let nombreEstudiante = null;
+    for (const selector of selectoresNombre) {
+      const elem = $(selector).first();
+      if (elem.length && elem.text().trim().length > 10) {
+        nombreEstudiante = elem.text().trim();
+        break;
+      }
+    }
+    
+    // ESTRATEGIA 2: Buscar por texto que contenga nombres largos
+    if (!nombreEstudiante) {
+      $('h1, h2, h3, p, div, span').each((i, elem) => {
+        const text = $(elem).text().trim();
+        if (/^[A-ZÁÉÍÓÚÑ\s]{15,50}$/.test(text)) {
+          nombreEstudiante = text;
+          return false; // break
+        }
+      });
+    }
+    
+    // ESTRATEGIA 3: Buscar con regex en el HTML completo
+    if (!nombreEstudiante) {
+      const nombreMatch = html.match(/(?:nombre|estudiante)["\s:]*([A-ZÁÉÍÓÚÑ\s]{15,50})/i);
+      nombreEstudiante = nombreMatch ? nombreMatch[1].trim() : null;
+    }
 
     if (!nombreEstudiante || nombreEstudiante.length < 10) {
+      console.log('❌ No se encontró nombre del estudiante en HTML');
       return null;
     }
 
-    // Patrón 2: Buscar puntaje global
-    const puntajeMatch = html.match(/(?:puntaje\s+global|global)["\s:]*(\d{2,3})/i) ||
-                        html.match(/class=["']puntaje-global["'][^>]*>(\d{2,3})</i) ||
-                        html.match(/<strong[^>]*>(\d{2,3})<\/strong>/);
+    // Buscar puntaje global
+    const selectoresPuntaje = [
+      '.puntaje-global',
+      '#puntajeGlobal',
+      '[data-puntaje-global]',
+      '.global-score',
+      '.puntaje-total'
+    ];
     
-    const puntajeGlobal = puntajeMatch ? parseInt(puntajeMatch[1]) : null;
-
-    // Patrón 3: Buscar materias y puntajes
-    const materias = [];
-    const materiasMatch = html.matchAll(/(?:lectura|matemática|matemáticas|ciencias|sociales|inglés)["\s:]*(\d{1,2})/gi);
-    
-    for (const match of materiasMatch) {
-      const nombreMateria = match[0].split(/["\s:]/)[0];
-      const puntaje = parseInt(match[1]);
-      
-      if (puntaje > 0 && puntaje <= 100) {
-        materias.push({
-          code: obtenerCodigoMateria(nombreMateria),
-          nombrePrueba: nombreMateria,
-          puntaje: puntaje
-        });
+    let puntajeGlobal = null;
+    for (const selector of selectoresPuntaje) {
+      const elem = $(selector).first();
+      if (elem.length) {
+        const puntajeText = elem.text().trim();
+        const puntaje = parseInt(puntajeText.replace(/\D/g, ''));
+        if (!isNaN(puntaje) && puntaje >= 0 && puntaje <= 500) {
+          puntajeGlobal = puntaje;
+          break;
+        }
       }
     }
 
-    // Patrón 4: Buscar ciudad/municipio
-    const ciudadMatch = html.match(/(?:ciudad|municipio)["\s:]*([A-ZÁÉÍÓÚÑ\s\.]{3,30})/i);
-    const ciudad = ciudadMatch ? ciudadMatch[1].trim() : 'Colombia';
+    // Buscar materias y puntajes
+    const materias = [];
+    
+    // Buscar en tablas
+    $('table tr, .materia, .subject, [data-materia]').each((i, elem) => {
+      const $elem = $(elem);
+      
+      // Buscar nombre de materia
+      const nombreCells = $elem.find('td:first-child, th:first-child, .nombre-materia, .subject-name');
+      const puntajeCells = $elem.find('td:last-child, td:nth-child(2), .puntaje, .score');
+      
+      const nombreMateria = nombreCells.text().trim();
+      const puntajeText = puntajeCells.text().trim();
+      const puntajeMateria = parseInt(puntajeText.replace(/\D/g, ''));
+      
+      if (nombreMateria && !isNaN(puntajeMateria) && puntajeMateria > 0 && puntajeMateria <= 100) {
+        const code = obtenerCodigoMateria(nombreMateria);
+        
+        // Evitar duplicados
+        if (!materias.find(m => m.code === code)) {
+          materias.push({
+            code: code,
+            nombrePrueba: nombreMateria,
+            puntaje: puntajeMateria
+          });
+        }
+      }
+    });
 
-    // Patrón 5: Buscar fecha
-    const fechaMatch = html.match(/(\d{4}-\d{2}-\d{2}|\d{2}\/\d{2}\/\d{4})/);
-    const fecha = fechaMatch ? fechaMatch[1] : new Date().toISOString().split('T')[0];
+    // Buscar ciudad/municipio
+    const selectoresCiudad = [
+      '.ciudad',
+      '.municipio',
+      '[data-ciudad]',
+      '[data-municipio]',
+      '.location'
+    ];
+    
+    let ciudad = 'Colombia';
+    for (const selector of selectoresCiudad) {
+      const elem = $(selector).first();
+      if (elem.length) {
+        ciudad = elem.text().trim();
+        break;
+      }
+    }
+
+    // Buscar fecha
+    let fechaResultados = new Date().toISOString().split('T')[0];
+    $('.fecha, .date, [data-fecha]').each((i, elem) => {
+      const fechaText = $(elem).text().trim();
+      const fechaMatch = fechaText.match(/(\d{4}-\d{2}-\d{2}|\d{2}\/\d{2}\/\d{4})/);
+      if (fechaMatch) {
+        fechaResultados = fechaMatch[1];
+        return false; // break
+      }
+    });
+
+    // Buscar registro/código
+    let registro = `WEB-${new Date().getFullYear()}`;
+    $('.registro, .code, [data-registro]').each((i, elem) => {
+      const regText = $(elem).text().trim();
+      if (regText.length > 5) {
+        registro = regText;
+        return false; // break
+      }
+    });
+
+    console.log(`📊 Datos parseados: ${nombreEstudiante}, puntaje: ${puntajeGlobal}, materias: ${materias.length}`);
 
     // Si encontramos datos válidos
-    if (nombreEstudiante && (puntajeGlobal || materias.length > 0)) {
+    if (nombreEstudiante && (puntajeGlobal || materias.length >= 3)) {
       return {
         status: true,
         estudiante: nombreEstudiante.toUpperCase(),
         examenes: [{
-          ACREGISTRO: `WEB-${new Date().getFullYear()}`,
+          ACREGISTRO: registro,
           puntaje: puntajeGlobal || calcularPuntajeGlobal(materias),
           ciudad: ciudad,
-          fechaResultados: fecha,
+          fechaResultados: fechaResultados,
           mensajeMotivacional: '¡Resultados obtenidos del sitio oficial del ICFES!',
-          puntajeMaterias: materias.length > 0 ? materias : generarMateriasDefault(puntajeGlobal || 300)
+          puntajeMaterias: materias.length >= 3 ? materias : generarMateriasDefault(puntajeGlobal || 300)
         }]
       };
     }
 
+    console.log('⚠️ Datos insuficientes para validar como reales');
     return null;
   } catch (error) {
-    console.error('Error parseando HTML:', error.message);
+    console.error('❌ Error parseando HTML:', error.message);
     return null;
   }
 }
