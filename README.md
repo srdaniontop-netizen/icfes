@@ -2,6 +2,8 @@
 
 Sistema web moderno para consultar resultados **REALES** de exámenes ICFES Saber 11 en Colombia.
 
+**🚀 Versión optimizada - Build limpio sin Puppeteer**
+
 ## 🌟 ¡AHORA CON API REAL DEL ICFES!
 
 ✅ **Conectado a la API oficial** - Obtén tus resultados reales  
