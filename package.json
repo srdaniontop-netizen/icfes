@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "node server.local.js",
+    "migrate": "node scripts/migrar-resultados.js",
     "test": "echo \"No tests configured yet\" && exit 0"
   },
   "keywords": [

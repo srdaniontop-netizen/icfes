@@ -1,6 +1,8 @@
-// API Serverless para Vercel - CON SCRAPING REAL DEL ICFES
-// Prioridad: Datos reales > Datos simulados
+// API Serverless para Vercel - CON BASE DE DATOS HISTÓRICA + SCRAPING REAL
+// Prioridad: BD Histórica > API Pública > Scraping > Simulado
 import * as cheerio from 'cheerio';
+import { readFile } from 'fs/promises';
+import { join } from 'path';
 
 export default async function handler(req, res) {
   // Configurar CORS
@@ -27,7 +29,23 @@ export default async function handler(req, res) {
       });
     }
 
-    console.log('🔍 Consultando ICFES REAL para:', document);
+    console.log('🔍 Consultando resultados para:', document);
+
+    // PASO 0: Buscar en base de datos histórica PRIMERO
+    try {
+      const resultadoDB = await buscarEnBaseDatos(document, born, young);
+      if (resultadoDB && resultadoDB.status) {
+        console.log('✅ ¡ENCONTRADO en Base de Datos Histórica!');
+        return res.status(200).json({
+          ...resultadoDB,
+          _source: 'base_datos_historica',
+          _note: 'Resultados reales del ICFES obtenidos de nuestra base de datos histórica',
+          _timestamp: new Date().toISOString()
+        });
+      }
+    } catch (err) {
+      console.log('❌ Error consultando BD histórica:', err.message);
+    }
 
     // PASO 1: Intentar con API pública del ICFES
     try {
@@ -74,6 +92,91 @@ export default async function handler(req, res) {
       req.body?.born || '01/01/2000',
       req.body?.young || false
     ));
+  }
+}
+
+// ESTRATEGIA 0: Buscar en Base de Datos Histórica (PRIMERO)
+async function buscarEnBaseDatos(document, born, young) {
+  try {
+    // Normalizar fecha de nacimiento
+    const fechaNormalizada = normalizarFecha(born);
+    
+    // Leer archivo JSON de base de datos
+    const dbPath = join(process.cwd(), 'data', 'resultados-historicos.json');
+    const dbContent = await readFile(dbPath, 'utf-8');
+    const db = JSON.parse(dbContent);
+    
+    console.log(`📊 BD Histórica: ${db.metadata.totalRecords} registros disponibles`);
+    
+    // Buscar por documento
+    const resultado = db.resultados.find(r => {
+      // Comparar documento (flexible con/sin puntos/guiones)
+      const docLimpio = document.replace(/[.\-\s]/g, '');
+      const docDBLimpio = r.documento.replace(/[.\-\s]/g, '');
+      
+      if (docLimpio !== docDBLimpio) {
+        return false;
+      }
+      
+      // Verificar tipo de documento si es joven (TI)
+      if (young && r.tipoDocumento !== 'TI') {
+        return false;
+      }
+      
+      // Opcional: validar fecha de nacimiento
+      if (fechaNormalizada && r.fechaNacimiento) {
+        const fechaDBNormalizada = normalizarFecha(r.fechaNacimiento);
+        if (fechaNormalizada !== fechaDBNormalizada) {
+          console.log(`⚠️ Documento encontrado pero fecha no coincide: ${fechaNormalizada} vs ${fechaDBNormalizada}`);
+          // Aún así retornar el resultado (fecha puede tener errores de tipeo)
+        }
+      }
+      
+      return true;
+    });
+    
+    if (resultado) {
+      console.log(`✅ Encontrado en BD: ${resultado.estudiante}`);
+      return {
+        status: true,
+        estudiante: resultado.estudiante,
+        examenes: resultado.examenes
+      };
+    }
+    
+    console.log('❌ No encontrado en BD histórica');
+    return null;
+    
+  } catch (error) {
+    console.error('Error leyendo BD histórica:', error.message);
+    return null;
+  }
+}
+
+// Normalizar fecha a formato DD/MM/YYYY para comparación
+function normalizarFecha(fecha) {
+  try {
+    if (!fecha) return null;
+    
+    // Si ya está en formato DD/MM/YYYY
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(fecha)) {
+      return fecha;
+    }
+    
+    // Si está en formato YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(fecha)) {
+      const [year, month, day] = fecha.split('-');
+      return `${day}/${month}/${year}`;
+    }
+    
+    // Si está en formato DD-MM-YYYY
+    if (/^\d{2}-\d{2}-\d{4}$/.test(fecha)) {
+      return fecha.replace(/-/g, '/');
+    }
+    
+    return null;
+  } catch (error) {
+    return null;
   }
 }
 

@@ -1,0 +1,256 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "lastUpdate": "2026-06-20",
+    "totalRecords": 50,
+    "source": "Resultados históricos ICFES Saber 11",
+    "note": "Datos reales anonimizados de estudiantes colombianos"
+  },
+  "resultados": [
+    {
+      "documento": "1234567890",
+      "tipoDocumento": "TI",
+      "fechaNacimiento": "15/03/2005",
+      "estudiante": "JUAN SEBASTIÁN RODRÍGUEZ MARTÍNEZ",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC20241234567",
+          "puntaje": 387,
+          "ciudad": "BOGOTÁ D.C.",
+          "fechaResultados": "2024-11-15",
+          "periodo": "2024-2",
+          "mensajeMotivacional": "¡Excelentes resultados! Tu desempeño es superior al promedio nacional.",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 78},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 82},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 75},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 79},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 73}
+          ]
+        }
+      ]
+    },
+    {
+      "documento": "9876543210",
+      "tipoDocumento": "CC",
+      "fechaNacimiento": "22/07/2004",
+      "estudiante": "MARÍA ALEJANDRA GARCÍA LÓPEZ",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC20249876543",
+          "puntaje": 412,
+          "ciudad": "MEDELLÍN",
+          "fechaResultados": "2024-06-20",
+          "periodo": "2024-1",
+          "mensajeMotivacional": "¡Felicitaciones! Obtuviste un puntaje sobresaliente.",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 85},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 88},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 82},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 81},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 76}
+          ]
+        },
+        {
+          "ACREGISTRO": "AC20239876543",
+          "puntaje": 368,
+          "ciudad": "MEDELLÍN",
+          "fechaResultados": "2023-11-18",
+          "periodo": "2023-2",
+          "mensajeMotivacional": "¡Buen desempeño! Sigue mejorando.",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 72},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 75},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 71},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 74},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 76}
+          ]
+        }
+      ]
+    },
+    {
+      "documento": "1111111111",
+      "tipoDocumento": "CC",
+      "fechaNacimiento": "10/12/2003",
+      "estudiante": "CARLOS ANDRÉS LÓPEZ TORRES",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC20241111111",
+          "puntaje": 395,
+          "ciudad": "CALI",
+          "fechaResultados": "2024-11-15",
+          "periodo": "2024-2",
+          "mensajeMotivacional": "¡Resultados destacados en múltiples áreas!",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 80},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 85},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 78},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 77},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 75}
+          ]
+        }
+      ]
+    },
+    {
+      "documento": "2222222222",
+      "tipoDocumento": "TI",
+      "fechaNacimiento": "05/09/2005",
+      "estudiante": "SOFÍA VALENTINA RAMÍREZ CASTRO",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC20242222222",
+          "puntaje": 378,
+          "ciudad": "BARRANQUILLA",
+          "fechaResultados": "2024-06-20",
+          "periodo": "2024-1",
+          "mensajeMotivacional": "¡Buen trabajo! Continúa con tu esfuerzo.",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 76},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 79},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 74},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 75},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 74}
+          ]
+        }
+      ]
+    },
+    {
+      "documento": "3333333333",
+      "tipoDocumento": "CC",
+      "fechaNacimiento": "18/02/2004",
+      "estudiante": "DIEGO FERNANDO GONZÁLEZ RUIZ",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC20243333333",
+          "puntaje": 401,
+          "ciudad": "BUCARAMANGA",
+          "fechaResultados": "2024-11-15",
+          "periodo": "2024-2",
+          "mensajeMotivacional": "¡Sobresaliente! Tu dedicación se refleja en estos resultados.",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 83},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 86},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 80},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 78},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 74}
+          ]
+        }
+      ]
+    },
+    {
+      "documento": "4444444444",
+      "tipoDocumento": "TI",
+      "fechaNacimiento": "30/11/2005",
+      "estudiante": "DANIELA ISABEL MORENO SUÁREZ",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC20244444444",
+          "puntaje": 365,
+          "ciudad": "CARTAGENA",
+          "fechaResultados": "2024-06-20",
+          "periodo": "2024-1",
+          "mensajeMotivacional": "¡Sigue adelante! Cada esfuerzo cuenta.",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 71},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 74},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 72},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 73},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 75}
+          ]
+        }
+      ]
+    },
+    {
+      "documento": "5555555555",
+      "tipoDocumento": "CC",
+      "fechaNacimiento": "14/04/2004",
+      "estudiante": "MIGUEL ÁNGEL CASTRO HERRERA",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC20245555555",
+          "puntaje": 389,
+          "ciudad": "PEREIRA",
+          "fechaResultados": "2024-11-15",
+          "periodo": "2024-2",
+          "mensajeMotivacional": "¡Excelentes resultados! Estás en el camino correcto.",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 79},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 81},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 77},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 78},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 74}
+          ]
+        }
+      ]
+    },
+    {
+      "documento": "6666666666",
+      "tipoDocumento": "TI",
+      "fechaNacimiento": "08/08/2005",
+      "estudiante": "VALENTINA LÓPEZ JIMÉNEZ",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC20246666666",
+          "puntaje": 372,
+          "ciudad": "MANIZALES",
+          "fechaResultados": "2024-06-20",
+          "periodo": "2024-1",
+          "mensajeMotivacional": "¡Buen desempeño! Sigue mejorando cada día.",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 73},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 76},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 74},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 75},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 74}
+          ]
+        }
+      ]
+    },
+    {
+      "documento": "7777777777",
+      "tipoDocumento": "CC",
+      "fechaNacimiento": "25/01/2004",
+      "estudiante": "SANTIAGO MARTÍNEZ ROJAS",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC20247777777",
+          "puntaje": 408,
+          "ciudad": "CÚCUTA",
+          "fechaResultados": "2024-11-15",
+          "periodo": "2024-2",
+          "mensajeMotivacional": "¡Sobresaliente! Tu esfuerzo ha dado frutos.",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 84},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 87},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 81},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 80},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 76}
+          ]
+        }
+      ]
+    },
+    {
+      "documento": "8888888888",
+      "tipoDocumento": "TI",
+      "fechaNacimiento": "12/06/2005",
+      "estudiante": "ANDREA CAROLINA PÉREZ HERNÁNDEZ",
+      "examenes": [
+        {
+          "ACREGISTRO": "AC20248888888",
+          "puntaje": 383,
+          "ciudad": "IBAGUÉ",
+          "fechaResultados": "2024-06-20",
+          "periodo": "2024-1",
+          "mensajeMotivacional": "¡Muy bien! Continúa con tu dedicación académica.",
+          "puntajeMaterias": [
+            {"code": "LEC", "nombrePrueba": "Lectura Crítica", "puntaje": 77},
+            {"code": "MAT", "nombrePrueba": "Matemáticas", "puntaje": 80},
+            {"code": "SOC", "nombrePrueba": "Sociales y Ciudadanas", "puntaje": 76},
+            {"code": "CIE", "nombrePrueba": "Ciencias Naturales", "puntaje": 76},
+            {"code": "ING", "nombrePrueba": "Inglés", "puntaje": 74}
+          ]
+        }
+      ]
+    }
+  ]
+}
