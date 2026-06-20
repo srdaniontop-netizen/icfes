@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Resultados ICFES - Sistema Oficial</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo">ICFES</div>
+                <p class="subtitle">Instituto Colombiano para la Evaluación de la Educación</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section class="info-section">
+                <h1>Consulta de Resultados</h1>
+                <p class="info-text">
+                    Ingresa tu información para consultar los resultados de tu examen. 
+                    Asegúrate de tener a mano tu número de documento y el tipo de examen que presentaste.
+                </p>
+            </section>
+
+            <section class="form-section">
+                <form id="consultaForm" class="consulta-form">
+                    <div class="form-group">
+                        <label for="tipoDocumento">Tipo de Documento</label>
+                        <select id="tipoDocumento" name="tipoDocumento" required>
+                            <option value="">Seleccione...</option>
+                            <option value="CC">Cédula de Ciudadanía</option>
+                            <option value="TI">Tarjeta de Identidad</option>
+                            <option value="CE">Cédula de Extranjería</option>
+                            <option value="PEP">Permiso Especial de Permanencia</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="numeroDocumento">Número de Documento</label>
+                        <input 
+                            type="text" 
+                            id="numeroDocumento" 
+                            name="numeroDocumento" 
+                            placeholder="Ingrese su número de documento"
+                            pattern="[0-9]+"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tipoExamen">Tipo de Examen</label>
+                        <select id="tipoExamen" name="tipoExamen" required>
+                            <option value="">Seleccione...</option>
+                            <option value="SABER11">Saber 11°</option>
+                            <option value="SABERPRO">Saber Pro</option>
+                            <option value="SABERTYT">Saber TyT</option>
+                            <option value="PRESABER">Pre Saber</option>
+                            <option value="VALIDACION">Validación del Bachillerato</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="periodo">Período de Aplicación</label>
+                        <select id="periodo" name="periodo" required>
+                            <option value="">Seleccione...</option>
+                            <option value="2026-1">2026-1</option>
+                            <option value="2025-2">2025-2</option>
+                            <option value="2025-1">2025-1</option>
+                            <option value="2024-2">2024-2</option>
+                            <option value="2024-1">2024-1</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-consultar">
+                        <span class="btn-text">Consultar Resultados</span>
+                        <span class="btn-loader" style="display: none;">Consultando...</span>
+                    </button>
+                </form>
+
+                <div id="errorMessage" class="message error-message" style="display: none;">
+                    <span class="message-icon">⚠️</span>
+                    <span class="message-text"></span>
+                </div>
+            </section>
+
+            <section id="resultadosSection" class="resultados-section" style="display: none;">
+                <h2>Resultados del Examen</h2>
+                
+                <div class="resultado-header">
+                    <div class="estudiante-info">
+                        <h3 id="nombreEstudiante"></h3>
+                        <p id="documentoEstudiante"></p>
+                        <p id="examenInfo"></p>
+                    </div>
+                    <div class="puesto-global">
+                        <div class="puesto-numero" id="puestoGlobal"></div>
+                        <div class="puesto-label">Puesto Nacional</div>
+                    </div>
+                </div>
+
+                <div class="puntaje-global">
+                    <div class="puntaje-container">
+                        <div class="puntaje-valor" id="puntajeGlobal"></div>
+                        <div class="puntaje-max">/ 500</div>
+                    </div>
+                    <div class="puntaje-label">Puntaje Global</div>
+                </div>
+
+                <div class="materias-grid" id="materiasGrid">
+                    <!-- Las materias se cargarán dinámicamente aquí -->
+                </div>
+
+                <div class="acciones-resultados">
+                    <button class="btn-descargar" onclick="descargarPDF()">
+                        📄 Descargar Resultados en PDF
+                    </button>
+                    <button class="btn-nueva-consulta" onclick="nuevaConsulta()">
+                        🔄 Nueva Consulta
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Información de Contacto</h4>
+                    <p>Dirección: Calle 26 No.69-76, Torre 2, Piso 16, Edificio Elemento</p>
+                    <p>Bogotá - Cundinamarca, Colombia</p>
+                    <p>Línea de atención: 601 9156101</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Horario de Atención</h4>
+                    <p>Lunes a Viernes</p>
+                    <p>8:00 a.m. - 4:00 p.m.</p>
+                    <p>Jornada continua</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Canales Oficiales</h4>
+                    <p>🌐 www.icfes.gov.co</p>
+                    <p>📧 atencionalciudadano@icfes.gov.co</p>
+                    <p>📱 App: Mi ICFES</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ICFES - Instituto Colombiano para la Evaluación de la Educación</p>
+                <p class="demo-notice">⚠️ Sistema de Demostración - Para propósitos educativos</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
