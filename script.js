@@ -516,7 +516,14 @@ async function consultarAPIReal(datos) {
         // Determinar si es TI o CC
         const esYoung = datos.tipoDocumento === 'TI';
         
+        const requestBody = {
+            document: datos.numeroDocumento,
+            young: esYoung,
+            born: fechaTransformada
+        };
+        
         console.log('🔄 Consultando API real del ICFES...');
+        console.log('📤 Datos enviados:', requestBody);
         
         // Intentar consultar la API real con timeout de 15 segundos
         const controller = new AbortController();
@@ -527,36 +534,43 @@ async function consultarAPIReal(datos) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                document: datos.numeroDocumento,
-                young: esYoung,
-                born: fechaTransformada
-            }),
+            body: JSON.stringify(requestBody),
             signal: controller.signal
         });
         
         clearTimeout(timeoutId);
         
+        console.log('📥 Respuesta HTTP:', response.status, response.statusText);
+        
         if (response.ok) {
             const resultado = await response.json();
+            console.log('📊 Datos recibidos:', resultado);
             
             // Verificar si la API retornó resultados válidos
             if (resultado.status === false) {
-                console.log('⚠️ API retornó sin resultados');
+                console.log('⚠️ API retornó: status=false (sin resultados)');
                 return null;
             }
             
             console.log('✅ Resultados obtenidos de la API real del ICFES');
+            console.log('👤 Estudiante:', resultado.estudiante);
+            console.log('📝 Exámenes encontrados:', resultado.examenes?.length || 0);
+            
             return transformarResultadoAPI(resultado, datos);
         }
         
         // Si la respuesta no es OK, lanzar error para usar fallback
+        console.error('❌ Error HTTP:', response.status);
         throw new Error(`HTTP ${response.status}`);
         
     } catch (error) {
         // Si hay error de red o timeout, intentar con base de datos local
         console.warn('⚠️ API real no disponible. Usando sistema de respaldo local.');
         console.error('Detalles del error:', error.message);
+        
+        if (error.name === 'AbortError') {
+            console.error('⏱️ Timeout: La API tardó más de 15 segundos en responder');
+        }
     }
     
     return null;
