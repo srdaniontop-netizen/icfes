@@ -142,13 +142,25 @@ async function handleSubmit(e) {
     // Mostrar estado de carga
     mostrarCargando();
     
-    // Simular llamada a API (en producción, aquí iría la llamada real)
+    // Intentar consultar la API real primero
     try {
-        await simularLlamadaAPI();
-        const resultado = buscarResultado(formData);
+        // Primero intentar con API real
+        let resultado = await consultarAPIReal(formData);
+        
+        // Si la API real no retorna resultados, usar base de datos local
+        if (!resultado) {
+            console.log('🔄 Intentando con base de datos local...');
+            await simularLlamadaAPI();
+            resultado = buscarResultado(formData);
+        }
         
         if (resultado) {
-            mostrarResultados(resultado);
+            // Si es un array (múltiples exámenes), mostrar todos
+            if (Array.isArray(resultado)) {
+                mostrarMultiplesResultados(resultado);
+            } else {
+                mostrarResultados(resultado);
+            }
         } else {
             mostrarError('No se encontraron resultados para los datos ingresados. Por favor verifica la información e intenta nuevamente.');
         }
@@ -208,7 +220,95 @@ function buscarResultado(datos) {
     return resultadosDB[clave] || null;
 }
 
-// Mostrar resultados en la página
+// Mostrar múltiples resultados (cuando presentó el examen varias veces)
+function mostrarMultiplesResultados(resultados) {
+    // Limpiar contenido previo
+    resultadosSection.innerHTML = '';
+    
+    // Crear header general
+    const headerGeneral = document.createElement('div');
+    headerGeneral.className = 'resultados-header-general';
+    headerGeneral.innerHTML = `
+        <h2>📊 Resultados para ${resultados[0].nombre}</h2>
+        <p style="color: #6c757d; margin-top: 0.5rem;">
+            ${resultados[0].tipoDocumento}: ${resultados[0].numeroDocumento} | 
+            Encontramos ${resultados.length} examen${resultados.length > 1 ? 'es' : ''}
+        </p>
+    `;
+    resultadosSection.appendChild(headerGeneral);
+    
+    // Crear una sección para cada examen
+    resultados.forEach((resultado, index) => {
+        const examenSection = crearSeccionExamen(resultado, index);
+        resultadosSection.appendChild(examenSection);
+    });
+    
+    // Botón de nueva consulta al final
+    const accionesDiv = document.createElement('div');
+    accionesDiv.className = 'acciones-resultados';
+    accionesDiv.innerHTML = `
+        <button class="btn-nueva-consulta" onclick="nuevaConsulta()">
+            🔄 Nueva Consulta
+        </button>
+    `;
+    resultadosSection.appendChild(accionesDiv);
+    
+    // Mostrar sección de resultados con animación
+    resultadosSection.style.display = 'block';
+    resultadosSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Crear sección para un examen individual
+function crearSeccionExamen(resultado, index) {
+    const section = document.createElement('div');
+    section.className = 'examen-individual';
+    section.style.marginBottom = '2rem';
+    
+    const headerHTML = `
+        <div class="examen-header" style="background: linear-gradient(135deg, ${index === 0 ? '#003875' : '#0066cc'} 0%, ${index === 0 ? '#0066cc' : '#00a0e3'} 100%); color: white; padding: 1.5rem; border-radius: 12px 12px 0 0; margin-bottom: 0;">
+            <h3 style="margin: 0; font-size: 1.3rem;">
+                📝 Examen ${resultado.numeroExamen} de ${resultado.totalExamenes}
+            </h3>
+            <p style="margin: 0.5rem 0 0 0; opacity: 0.9; font-size: 0.95rem;">
+                Registro: ${resultado.periodo} ${resultado.colegioMunicipio ? `| ${resultado.colegioMunicipio}` : ''}
+            </p>
+            ${resultado.fechaPresentacion && resultado.fechaPresentacion !== 'No disponible' ? 
+                `<p style="margin: 0.25rem 0 0 0; opacity: 0.8; font-size: 0.85rem;">📅 ${resultado.fechaPresentacion}</p>` : ''}
+        </div>
+    `;
+    
+    const puntajeHTML = `
+        <div class="puntaje-global" style="margin-top: 0; border-radius: 0;">
+            <div class="puntaje-container">
+                <div class="puntaje-valor">${resultado.puntajeGlobal}</div>
+                <div class="puntaje-max">/ 500</div>
+            </div>
+            <div class="puntaje-label">Puntaje Global</div>
+            ${resultado.mensajeMotivacional ? 
+                `<p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.95; font-style: italic;">
+                    💬 "${resultado.mensajeMotivacional}"
+                </p>` : ''}
+        </div>
+    `;
+    
+    const materiasGrid = document.createElement('div');
+    materiasGrid.className = 'materias-grid';
+    materiasGrid.style.padding = '1.5rem';
+    materiasGrid.style.background = 'var(--bg-white)';
+    materiasGrid.style.borderRadius = '0 0 12px 12px';
+    
+    resultado.materias.forEach(materia => {
+        const card = crearMateriaCard(materia);
+        materiasGrid.appendChild(card);
+    });
+    
+    section.innerHTML = headerHTML + puntajeHTML;
+    section.appendChild(materiasGrid);
+    
+    return section;
+}
+
+// Mostrar resultados en la página (UN SOLO EXAMEN)
 function mostrarResultados(resultado) {
     // Actualizar información del estudiante
     document.getElementById('nombreEstudiante').textContent = resultado.nombre;
@@ -221,15 +321,31 @@ function mostrarResultados(resultado) {
         infoExamen += `<br><small style="font-size: 0.85em; color: #6c757d;">${resultado.colegioNombre} - ${resultado.colegioMunicipio}</small>`;
     } else if (resultado.universidadNombre) {
         infoExamen += `<br><small style="font-size: 0.85em; color: #6c757d;">${resultado.universidadNombre}<br>${resultado.programaAcademico}</small>`;
+    } else if (resultado.colegioMunicipio && resultado.colegioMunicipio !== 'No disponible') {
+        infoExamen += `<br><small style="font-size: 0.85em; color: #6c757d;">${resultado.colegioMunicipio}</small>`;
     }
     document.getElementById('examenInfo').innerHTML = infoExamen;
     
     // Actualizar puntaje global
     document.getElementById('puntajeGlobal').textContent = resultado.puntajeGlobal;
     
-    // Actualizar puesto global
-    document.getElementById('puestoGlobal').textContent = 
-        resultado.puestoGlobal.toLocaleString('es-CO');
+    // Actualizar puesto global (si existe)
+    const puestoElement = document.getElementById('puestoGlobal');
+    if (resultado.puestoGlobal) {
+        puestoElement.textContent = resultado.puestoGlobal.toLocaleString('es-CO');
+        puestoElement.parentElement.style.display = 'block';
+    } else {
+        puestoElement.parentElement.style.display = 'none';
+    }
+    
+    // Mostrar mensaje motivacional si existe
+    const mensajeDiv = document.getElementById('mensajeMotivacional');
+    if (resultado.mensajeMotivacional) {
+        mensajeDiv.textContent = `"${resultado.mensajeMotivacional}"`;
+        mensajeDiv.style.display = 'block';
+    } else {
+        mensajeDiv.style.display = 'none';
+    }
     
     // Generar cards de materias
     const materiasGrid = document.getElementById('materiasGrid');
@@ -380,32 +496,41 @@ function agregarAyudaContextual() {
 }
 
 // Función para integrar con API real del ICFES
-// Esta función intenta conectar con el sitio oficial y usa fallback si falla
+// Esta función intenta conectar con la API real y usa fallback si falla
 async function consultarAPIReal(datos) {
     /*
     ESTRATEGIA DE FALLBACK:
-    1. Intentar consultar el sitio oficial del ICFES
+    1. Intentar consultar la API real de ICFES
     2. Si falla (timeout, error de red, servidor caído), usar base de datos local
     3. Mostrar advertencia al usuario sobre el origen de los datos
     */
     
-    // URL de la API oficial del ICFES (cuando esté disponible)
-    const apiUrlOficial = 'https://www.icfes.gov.co/api/resultados'; // URL de ejemplo
+    // URL de la API real del ICFES
+    const apiUrlReal = 'https://icfes-server.vercel.app/consulta';
     
     try {
-        // Intentar consultar la API oficial con timeout de 10 segundos
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        // Transformar fecha de YYYY-MM-DD a DD/MM/YYYY
+        const [year, month, day] = datos.fechaNacimiento.split('-');
+        const fechaTransformada = `${day}/${month}/${year}`;
         
-        const response = await fetch(apiUrlOficial, {
+        // Determinar si es TI o CC
+        const esYoung = datos.tipoDocumento === 'TI';
+        
+        console.log('🔄 Consultando API real del ICFES...');
+        
+        // Intentar consultar la API real con timeout de 15 segundos
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000);
+        
+        const response = await fetch(apiUrlReal, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                tipo_documento: datos.tipoDocumento,
-                numero_documento: datos.numeroDocumento,
-                fecha_nacimiento: datos.fechaNacimiento
+                document: datos.numeroDocumento,
+                young: esYoung,
+                born: fechaTransformada
             }),
             signal: controller.signal
         });
@@ -414,17 +539,71 @@ async function consultarAPIReal(datos) {
         
         if (response.ok) {
             const resultado = await response.json();
-            console.log('✅ Resultados obtenidos del servidor oficial ICFES');
-            return resultado;
+            
+            // Verificar si la API retornó resultados válidos
+            if (resultado.status === false) {
+                console.log('⚠️ API retornó sin resultados');
+                return null;
+            }
+            
+            console.log('✅ Resultados obtenidos de la API real del ICFES');
+            return transformarResultadoAPI(resultado, datos);
         }
         
+        // Si la respuesta no es OK, lanzar error para usar fallback
+        throw new Error(`HTTP ${response.status}`);
+        
     } catch (error) {
-        // Si hay error de red o timeout, usar base de datos local
-        console.warn('⚠️ Servidor oficial no disponible. Usando sistema de respaldo local.');
+        // Si hay error de red o timeout, intentar con base de datos local
+        console.warn('⚠️ API real no disponible. Usando sistema de respaldo local.');
         console.error('Detalles del error:', error.message);
     }
     
     return null;
+}
+
+// Función para transformar la respuesta de la API al formato esperado
+function transformarResultadoAPI(apiData, datosOriginales) {
+    if (!apiData || !apiData.examenes || apiData.examenes.length === 0) {
+        return null;
+    }
+    
+    // Si hay múltiples exámenes, retornar array de resultados
+    const examenes = apiData.examenes.map((examen, index) => {
+        // Mapear las materias
+        const materias = examen.puntajeMaterias.map(materia => {
+            let nivel = 'medio';
+            if (materia.puntaje >= 75) nivel = 'superior';
+            else if (materia.puntaje >= 60) nivel = 'alto';
+            else if (materia.puntaje < 45) nivel = 'bajo';
+            
+            return {
+                nombre: materia.nombrePrueba,
+                puntaje: materia.puntaje,
+                nivel: nivel,
+                codigo: materia.code
+            };
+        });
+        
+        return {
+            nombre: apiData.estudiante,
+            tipoDocumento: datosOriginales.tipoDocumento,
+            numeroDocumento: datosOriginales.numeroDocumento,
+            fechaNacimiento: datosOriginales.fechaNacimiento,
+            tipoExamen: 'Saber 11°',
+            periodo: examen.ACREGISTRO || `Examen ${index + 1}`,
+            fechaPresentacion: examen.fechaResultados || 'No disponible',
+            colegioMunicipio: examen.ciudad || 'No disponible',
+            puntajeGlobal: examen.puntaje,
+            mensajeMotivacional: examen.mensajeMotivacional,
+            materias: materias,
+            esMultiple: apiData.examenes.length > 1,
+            numeroExamen: index + 1,
+            totalExamenes: apiData.examenes.length
+        };
+    });
+    
+    return examenes;
 }
 
 // Manejo de errores global
