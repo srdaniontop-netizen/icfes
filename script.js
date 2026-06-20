@@ -524,44 +524,12 @@ async function consultarAPIReal(datos) {
         
         console.log('🔄 Consultando API real del ICFES...');
         console.log('📤 Datos enviados:', requestBody);
+        console.log('⚠️ NOTA: La API pública ya no está disponible (requiere pago)');
+        console.log('📊 Usando base de datos local de demostración...');
         
-        // Intentar consultar la API real con timeout de 15 segundos
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 15000);
-        
-        const response = await fetch(apiUrlReal, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(requestBody),
-            signal: controller.signal
-        });
-        
-        clearTimeout(timeoutId);
-        
-        console.log('📥 Respuesta HTTP:', response.status, response.statusText);
-        
-        if (response.ok) {
-            const resultado = await response.json();
-            console.log('📊 Datos recibidos:', resultado);
-            
-            // Verificar si la API retornó resultados válidos
-            if (resultado.status === false) {
-                console.log('⚠️ API retornó: status=false (sin resultados)');
-                return null;
-            }
-            
-            console.log('✅ Resultados obtenidos de la API real del ICFES');
-            console.log('👤 Estudiante:', resultado.estudiante);
-            console.log('📝 Exámenes encontrados:', resultado.examenes?.length || 0);
-            
-            return transformarResultadoAPI(resultado, datos);
-        }
-        
-        // Si la respuesta no es OK, lanzar error para usar fallback
-        console.error('❌ Error HTTP:', response.status);
-        throw new Error(`HTTP ${response.status}`);
+        // La API ya no está disponible públicamente
+        // Retornar null para usar fallback inmediatamente
+        return null;
         
     } catch (error) {
         // Si hay error de red o timeout, intentar con base de datos local
