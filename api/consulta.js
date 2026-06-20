@@ -1,7 +1,8 @@
-// API Serverless para Vercel - VERSIÓN AGRESIVA
-// Este endpoint hace scraping real del sitio oficial del ICFES
-import fetch from 'node-fetch';
+// API Serverless para Vercel - VERSIÓN OPTIMIZADA
+// Este endpoint hace scraping del sitio oficial del ICFES
 import * as cheerio from 'cheerio';
+
+// IMPORTANTE: En Node.js 18+ fetch es nativo, no necesitamos importarlo
 
 // Configurar CORS
 const corsHeaders = {
