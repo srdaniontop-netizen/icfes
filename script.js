@@ -496,17 +496,15 @@ function agregarAyudaContextual() {
 }
 
 // Función para integrar con API real del ICFES
-// Esta función intenta conectar con la API real y usa fallback si falla
+// Esta función intenta múltiples estrategias para obtener datos reales
 async function consultarAPIReal(datos) {
     /*
-    ESTRATEGIA DE FALLBACK:
-    1. Intentar consultar la API real de ICFES
-    2. Si falla (timeout, error de red, servidor caído), usar base de datos local
-    3. Mostrar advertencia al usuario sobre el origen de los datos
+    ESTRATEGIAS IMPLEMENTADAS:
+    1. API de Vercel Serverless (con scraping)
+    2. API proxy alternativa
+    3. Llamada directa si está disponible
+    4. Base de datos local como último recurso
     */
-    
-    // URL de la API real del ICFES
-    const apiUrlReal = 'https://icfes-server.vercel.app/consulta';
     
     try {
         // Transformar fecha de YYYY-MM-DD a DD/MM/YYYY
@@ -522,23 +520,65 @@ async function consultarAPIReal(datos) {
             born: fechaTransformada
         };
         
-        console.log('🔄 Consultando API real del ICFES...');
+        console.log('🔄 Consultando resultados ICFES...');
         console.log('📤 Datos enviados:', requestBody);
-        console.log('⚠️ NOTA: La API pública ya no está disponible (requiere pago)');
-        console.log('📊 Usando base de datos local de demostración...');
         
-        // La API ya no está disponible públicamente
-        // Retornar null para usar fallback inmediatamente
-        return null;
+        // ESTRATEGIA 1: Usar API de Vercel (propia)
+        const apiUrls = [
+            '/api/consulta', // Vercel serverless
+            'https://icfes-server.vercel.app/consulta', // API pública (si vuelve)
+            window.location.origin + '/api/consulta' // Fallback local
+        ];
+        
+        for (const apiUrl of apiUrls) {
+            try {
+                console.log(`🔍 Intentando con: ${apiUrl}`);
+                
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000);
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody),
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                console.log(`📥 Respuesta de ${apiUrl}:`, response.status);
+                
+                if (response.ok) {
+                    const resultado = await response.json();
+                    console.log('📊 Datos recibidos:', resultado);
+                    
+                    // Verificar si la API retornó resultados válidos
+                    if (resultado.status === false) {
+                        console.log('⚠️ API retornó: status=false (sin resultados)');
+                        continue;
+                    }
+                    
+                    console.log('✅ Resultados obtenidos exitosamente');
+                    console.log('👤 Estudiante:', resultado.estudiante);
+                    console.log('📝 Exámenes encontrados:', resultado.examenes?.length || 0);
+                    
+                    return transformarResultadoAPI(resultado, datos);
+                }
+                
+            } catch (error) {
+                console.log(`❌ Error con ${apiUrl}:`, error.message);
+                continue;
+            }
+        }
+        
+        // Si llegamos aquí, ninguna API funcionó
+        console.warn('⚠️ Ninguna API disponible. Usando base de datos local.');
         
     } catch (error) {
-        // Si hay error de red o timeout, intentar con base de datos local
-        console.warn('⚠️ API real no disponible. Usando sistema de respaldo local.');
-        console.error('Detalles del error:', error.message);
-        
-        if (error.name === 'AbortError') {
-            console.error('⏱️ Timeout: La API tardó más de 15 segundos en responder');
-        }
+        console.error('❌ Error general:', error.message);
     }
     
     return null;
