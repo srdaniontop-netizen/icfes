@@ -1,0 +1,65 @@
+{
+  "CC-1234567890-2005-03-15": {
+    "nombre": "MARÍA ALEJANDRA GARCÍA LÓPEZ",
+    "tipoDocumento": "CC",
+    "numeroDocumento": "1234567890",
+    "fechaNacimiento": "2005-03-15",
+    "tipoExamen": "Saber 11°",
+    "periodo": "2023-2",
+    "fechaPresentacion": "2023-08-15",
+    "colegioNombre": "COLEGIO SAN FRANCISCO DE ASÍS",
+    "colegioMunicipio": "BOGOTÁ D.C.",
+    "puntajeGlobal": 387,
+    "puestoGlobal": 1523,
+    "puestoDepartamental": 342,
+    "materias": [
+      { "nombre": "Lectura Crítica", "puntaje": 78, "nivel": "superior", "percentil": 95 },
+      { "nombre": "Matemáticas", "puntaje": 75, "nivel": "alto", "percentil": 88 },
+      { "nombre": "Sociales y Ciudadanas", "puntaje": 72, "nivel": "alto", "percentil": 85 },
+      { "nombre": "Ciencias Naturales", "puntaje": 80, "nivel": "superior", "percentil": 92 },
+      { "nombre": "Inglés", "puntaje": 82, "nivel": "superior", "percentil": 94 }
+    ]
+  },
+  "TI-9876543210-2006-07-22": {
+    "nombre": "JUAN SEBASTIÁN RODRÍGUEZ MARTÍNEZ",
+    "tipoDocumento": "TI",
+    "numeroDocumento": "9876543210",
+    "fechaNacimiento": "2006-07-22",
+    "tipoExamen": "Saber 11°",
+    "periodo": "2024-1",
+    "fechaPresentacion": "2024-04-20",
+    "colegioNombre": "INSTITUCIÓN EDUCATIVA DISTRITAL",
+    "colegioMunicipio": "MEDELLÍN",
+    "puntajeGlobal": 342,
+    "puestoGlobal": 4567,
+    "puestoDepartamental": 823,
+    "materias": [
+      { "nombre": "Lectura Crítica", "puntaje": 68, "nivel": "medio", "percentil": 72 },
+      { "nombre": "Matemáticas", "puntaje": 70, "nivel": "alto", "percentil": 78 },
+      { "nombre": "Sociales y Ciudadanas", "puntaje": 65, "nivel": "medio", "percentil": 68 },
+      { "nombre": "Ciencias Naturales", "puntaje": 72, "nivel": "alto", "percentil": 80 },
+      { "nombre": "Inglés", "puntaje": 67, "nivel": "medio", "percentil": 70 }
+    ]
+  },
+  "CC-1111111111-1998-12-10": {
+    "nombre": "ANDREA CAROLINA PÉREZ HERNÁNDEZ",
+    "tipoDocumento": "CC",
+    "numeroDocumento": "1111111111",
+    "fechaNacimiento": "1998-12-10",
+    "tipoExamen": "Saber Pro",
+    "periodo": "2023-2",
+    "fechaPresentacion": "2023-11-12",
+    "universidadNombre": "UNIVERSIDAD NACIONAL DE COLOMBIA",
+    "programaAcademico": "INGENIERÍA DE SISTEMAS",
+    "puntajeGlobal": 425,
+    "puestoGlobal": 892,
+    "puestoPrograma": 45,
+    "materias": [
+      { "nombre": "Lectura Crítica", "puntaje": 85, "nivel": "superior", "percentil": 96 },
+      { "nombre": "Razonamiento Cuantitativo", "puntaje": 88, "nivel": "superior", "percentil": 98 },
+      { "nombre": "Competencias Ciudadanas", "puntaje": 82, "nivel": "superior", "percentil": 94 },
+      { "nombre": "Comunicación Escrita", "puntaje": 86, "nivel": "superior", "percentil": 97 },
+      { "nombre": "Inglés", "puntaje": 84, "nivel": "superior", "percentil": 95 }
+    ]
+  }
+}

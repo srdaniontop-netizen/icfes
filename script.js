@@ -1,52 +1,109 @@
 // Base de datos simulada de resultados
 // En producción, esto se reemplazaría con llamadas a la API oficial del ICFES
 const resultadosDB = {
-    'CC-1234567890-SABER11-2026-1': {
+    'CC-1234567890-2005-03-15': {
         nombre: 'MARÍA ALEJANDRA GARCÍA LÓPEZ',
         tipoDocumento: 'CC',
         numeroDocumento: '1234567890',
+        fechaNacimiento: '2005-03-15',
         tipoExamen: 'Saber 11°',
-        periodo: '2026-1',
+        periodo: '2023-2',
+        fechaPresentacion: '2023-08-15',
+        colegioNombre: 'COLEGIO SAN FRANCISCO DE ASÍS',
+        colegioMunicipio: 'BOGOTÁ D.C.',
         puntajeGlobal: 387,
         puestoGlobal: 1523,
+        puestoDepartamental: 342,
         materias: [
-            { nombre: 'Lectura Crítica', puntaje: 78, nivel: 'superior' },
-            { nombre: 'Matemáticas', puntaje: 75, nivel: 'alto' },
-            { nombre: 'Sociales y Ciudadanas', puntaje: 72, nivel: 'alto' },
-            { nombre: 'Ciencias Naturales', puntaje: 80, nivel: 'superior' },
-            { nombre: 'Inglés', puntaje: 82, nivel: 'superior' }
+            { nombre: 'Lectura Crítica', puntaje: 78, nivel: 'superior', percentil: 95 },
+            { nombre: 'Matemáticas', puntaje: 75, nivel: 'alto', percentil: 88 },
+            { nombre: 'Sociales y Ciudadanas', puntaje: 72, nivel: 'alto', percentil: 85 },
+            { nombre: 'Ciencias Naturales', puntaje: 80, nivel: 'superior', percentil: 92 },
+            { nombre: 'Inglés', puntaje: 82, nivel: 'superior', percentil: 94 }
         ]
     },
-    'TI-9876543210-SABER11-2025-2': {
+    'TI-9876543210-2006-07-22': {
         nombre: 'JUAN SEBASTIÁN RODRÍGUEZ MARTÍNEZ',
         tipoDocumento: 'TI',
         numeroDocumento: '9876543210',
+        fechaNacimiento: '2006-07-22',
         tipoExamen: 'Saber 11°',
-        periodo: '2025-2',
+        periodo: '2024-1',
+        fechaPresentacion: '2024-04-20',
+        colegioNombre: 'INSTITUCIÓN EDUCATIVA DISTRITAL',
+        colegioMunicipio: 'MEDELLÍN',
         puntajeGlobal: 342,
         puestoGlobal: 4567,
+        puestoDepartamental: 823,
         materias: [
-            { nombre: 'Lectura Crítica', puntaje: 68, nivel: 'medio' },
-            { nombre: 'Matemáticas', puntaje: 70, nivel: 'alto' },
-            { nombre: 'Sociales y Ciudadanas', puntaje: 65, nivel: 'medio' },
-            { nombre: 'Ciencias Naturales', puntaje: 72, nivel: 'alto' },
-            { nombre: 'Inglés', puntaje: 67, nivel: 'medio' }
+            { nombre: 'Lectura Crítica', puntaje: 68, nivel: 'medio', percentil: 72 },
+            { nombre: 'Matemáticas', puntaje: 70, nivel: 'alto', percentil: 78 },
+            { nombre: 'Sociales y Ciudadanas', puntaje: 65, nivel: 'medio', percentil: 68 },
+            { nombre: 'Ciencias Naturales', puntaje: 72, nivel: 'alto', percentil: 80 },
+            { nombre: 'Inglés', puntaje: 67, nivel: 'medio', percentil: 70 }
         ]
     },
-    'CC-1111111111-SABERPRO-2025-1': {
+    'CC-1111111111-1998-12-10': {
         nombre: 'ANDREA CAROLINA PÉREZ HERNÁNDEZ',
         tipoDocumento: 'CC',
         numeroDocumento: '1111111111',
+        fechaNacimiento: '1998-12-10',
         tipoExamen: 'Saber Pro',
-        periodo: '2025-1',
+        periodo: '2023-2',
+        fechaPresentacion: '2023-11-12',
+        universidadNombre: 'UNIVERSIDAD NACIONAL DE COLOMBIA',
+        programaAcademico: 'INGENIERÍA DE SISTEMAS',
         puntajeGlobal: 425,
         puestoGlobal: 892,
+        puestoPrograma: 45,
         materias: [
-            { nombre: 'Lectura Crítica', puntaje: 85, nivel: 'superior' },
-            { nombre: 'Razonamiento Cuantitativo', puntaje: 88, nivel: 'superior' },
-            { nombre: 'Competencias Ciudadanas', puntaje: 82, nivel: 'superior' },
-            { nombre: 'Comunicación Escrita', puntaje: 86, nivel: 'superior' },
-            { nombre: 'Inglés', puntaje: 84, nivel: 'superior' }
+            { nombre: 'Lectura Crítica', puntaje: 85, nivel: 'superior', percentil: 96 },
+            { nombre: 'Razonamiento Cuantitativo', puntaje: 88, nivel: 'superior', percentil: 98 },
+            { nombre: 'Competencias Ciudadanas', puntaje: 82, nivel: 'superior', percentil: 94 },
+            { nombre: 'Comunicación Escrita', puntaje: 86, nivel: 'superior', percentil: 97 },
+            { nombre: 'Inglés', puntaje: 84, nivel: 'superior', percentil: 95 }
+        ]
+    },
+    'CC-52123456-2005-05-20': {
+        nombre: 'CARLOS ANDRÉS LÓPEZ TORRES',
+        tipoDocumento: 'CC',
+        numeroDocumento: '52123456',
+        fechaNacimiento: '2005-05-20',
+        tipoExamen: 'Saber 11°',
+        periodo: '2023-1',
+        fechaPresentacion: '2023-03-18',
+        colegioNombre: 'COLEGIO MAYOR DE SAN BARTOLOMÉ',
+        colegioMunicipio: 'BOGOTÁ D.C.',
+        puntajeGlobal: 395,
+        puestoGlobal: 980,
+        puestoDepartamental: 245,
+        materias: [
+            { nombre: 'Lectura Crítica', puntaje: 80, nivel: 'superior', percentil: 93 },
+            { nombre: 'Matemáticas', puntaje: 82, nivel: 'superior', percentil: 95 },
+            { nombre: 'Sociales y Ciudadanas', puntaje: 77, nivel: 'alto', percentil: 90 },
+            { nombre: 'Ciencias Naturales', puntaje: 78, nivel: 'alto', percentil: 91 },
+            { nombre: 'Inglés', puntaje: 78, nivel: 'alto', percentil: 89 }
+        ]
+    },
+    'TI-1098765432-2007-11-30': {
+        nombre: 'SOFÍA VALENTINA RAMÍREZ CASTRO',
+        tipoDocumento: 'TI',
+        numeroDocumento: '1098765432',
+        fechaNacimiento: '2007-11-30',
+        tipoExamen: 'Saber 11°',
+        periodo: '2025-2',
+        fechaPresentacion: '2025-09-14',
+        colegioNombre: 'GIMNASIO MODERNO',
+        colegioMunicipio: 'BOGOTÁ D.C.',
+        puntajeGlobal: 410,
+        puestoGlobal: 567,
+        puestoDepartamental: 123,
+        materias: [
+            { nombre: 'Lectura Crítica', puntaje: 85, nivel: 'superior', percentil: 97 },
+            { nombre: 'Matemáticas', puntaje: 83, nivel: 'superior', percentil: 95 },
+            { nombre: 'Sociales y Ciudadanas', puntaje: 81, nivel: 'superior', percentil: 94 },
+            { nombre: 'Ciencias Naturales', puntaje: 82, nivel: 'superior', percentil: 95 },
+            { nombre: 'Inglés', puntaje: 79, nivel: 'alto', percentil: 92 }
         ]
     }
 };
@@ -74,8 +131,7 @@ async function handleSubmit(e) {
     const formData = {
         tipoDocumento: document.getElementById('tipoDocumento').value,
         numeroDocumento: document.getElementById('numeroDocumento').value,
-        tipoExamen: document.getElementById('tipoExamen').value,
-        periodo: document.getElementById('periodo').value
+        fechaNacimiento: document.getElementById('fechaNacimiento').value
     };
     
     // Validar datos
@@ -121,13 +177,18 @@ function validarFormulario(datos) {
         return false;
     }
     
-    if (!datos.tipoExamen) {
-        mostrarError('Por favor selecciona el tipo de examen');
+    if (!datos.fechaNacimiento) {
+        mostrarError('Por favor ingresa tu fecha de nacimiento');
         return false;
     }
     
-    if (!datos.periodo) {
-        mostrarError('Por favor selecciona el período de aplicación');
+    // Validar formato de fecha
+    const fechaNac = new Date(datos.fechaNacimiento);
+    const hoy = new Date();
+    const edad = hoy.getFullYear() - fechaNac.getFullYear();
+    
+    if (edad < 15 || edad > 80) {
+        mostrarError('La fecha de nacimiento no es válida');
         return false;
     }
     
@@ -143,7 +204,7 @@ function simularLlamadaAPI() {
 
 // Buscar resultado en la base de datos simulada
 function buscarResultado(datos) {
-    const clave = `${datos.tipoDocumento}-${datos.numeroDocumento}-${datos.tipoExamen}-${datos.periodo}`;
+    const clave = `${datos.tipoDocumento}-${datos.numeroDocumento}-${datos.fechaNacimiento}`;
     return resultadosDB[clave] || null;
 }
 
@@ -153,8 +214,15 @@ function mostrarResultados(resultado) {
     document.getElementById('nombreEstudiante').textContent = resultado.nombre;
     document.getElementById('documentoEstudiante').textContent = 
         `${resultado.tipoDocumento}: ${resultado.numeroDocumento}`;
-    document.getElementById('examenInfo').textContent = 
-        `${resultado.tipoExamen} - Período ${resultado.periodo}`;
+    
+    // Información específica según tipo de examen
+    let infoExamen = `${resultado.tipoExamen} - Período ${resultado.periodo}`;
+    if (resultado.colegioNombre) {
+        infoExamen += `<br><small style="font-size: 0.85em; color: #6c757d;">${resultado.colegioNombre} - ${resultado.colegioMunicipio}</small>`;
+    } else if (resultado.universidadNombre) {
+        infoExamen += `<br><small style="font-size: 0.85em; color: #6c757d;">${resultado.universidadNombre}<br>${resultado.programaAcademico}</small>`;
+    }
+    document.getElementById('examenInfo').innerHTML = infoExamen;
     
     // Actualizar puntaje global
     document.getElementById('puntajeGlobal').textContent = resultado.puntajeGlobal;
@@ -188,6 +256,7 @@ function crearMateriaCard(materia) {
         <div class="materia-nombre">${materia.nombre}</div>
         <div class="materia-puntaje">${materia.puntaje}</div>
         <span class="materia-nivel nivel-${materia.nivel}">${nivelTexto}</span>
+        ${materia.percentil ? `<div class="materia-percentil">Percentil: ${materia.percentil}</div>` : ''}
     `;
     
     return card;
@@ -266,15 +335,28 @@ document.getElementById('numeroDocumento').addEventListener('input', function(e)
     this.value = this.value.replace(/\D/g, '');
 });
 
+// Establecer fecha máxima para el campo de fecha de nacimiento
+document.addEventListener('DOMContentLoaded', function() {
+    const fechaInput = document.getElementById('fechaNacimiento');
+    const hoy = new Date();
+    const hace15anos = new Date(hoy.getFullYear() - 15, hoy.getMonth(), hoy.getDate());
+    const hace80anos = new Date(hoy.getFullYear() - 80, hoy.getMonth(), hoy.getDate());
+    
+    fechaInput.max = hace15anos.toISOString().split('T')[0];
+    fechaInput.min = hace80anos.toISOString().split('T')[0];
+});
+
 // Auto-completar para pruebas de desarrollo
 // Esta función solo debe estar en desarrollo, no en producción
 function autocompletarParaPrueba() {
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
         console.log('%c🔧 MODO DESARROLLO', 'color: #0066cc; font-size: 14px; font-weight: bold;');
         console.log('%cDatos de prueba disponibles:', 'color: #666; font-size: 12px;');
-        console.log('%c1. CC: 1234567890, Saber 11°, 2026-1', 'color: #28a745; font-size: 11px;');
-        console.log('%c2. TI: 9876543210, Saber 11°, 2025-2', 'color: #28a745; font-size: 11px;');
-        console.log('%c3. CC: 1111111111, Saber Pro, 2025-1', 'color: #28a745; font-size: 11px;');
+        console.log('%c1. CC: 1234567890, Fecha: 2005-03-15 (Saber 11°)', 'color: #28a745; font-size: 11px;');
+        console.log('%c2. TI: 9876543210, Fecha: 2006-07-22 (Saber 11°)', 'color: #28a745; font-size: 11px;');
+        console.log('%c3. CC: 1111111111, Fecha: 1998-12-10 (Saber Pro)', 'color: #28a745; font-size: 11px;');
+        console.log('%c4. CC: 52123456, Fecha: 2005-05-20 (Saber 11°)', 'color: #28a745; font-size: 11px;');
+        console.log('%c5. TI: 1098765432, Fecha: 2007-11-30 (Saber 11°)', 'color: #28a745; font-size: 11px;');
     }
 }
 
@@ -298,42 +380,50 @@ function agregarAyudaContextual() {
 }
 
 // Función para integrar con API real del ICFES
-// Esta es una plantilla que debes adaptar cuando tengas acceso a la API oficial
+// Esta función intenta conectar con el sitio oficial y usa fallback si falla
 async function consultarAPIReal(datos) {
     /*
-    NOTA IMPORTANTE: Esta función es un template para cuando tengas acceso a la API oficial
+    ESTRATEGIA DE FALLBACK:
+    1. Intentar consultar el sitio oficial del ICFES
+    2. Si falla (timeout, error de red, servidor caído), usar base de datos local
+    3. Mostrar advertencia al usuario sobre el origen de los datos
+    */
     
-    const apiUrl = 'https://api.icfes.gov.co/v1/resultados'; // URL de ejemplo
+    // URL de la API oficial del ICFES (cuando esté disponible)
+    const apiUrlOficial = 'https://www.icfes.gov.co/api/resultados'; // URL de ejemplo
     
     try {
-        const response = await fetch(apiUrl, {
+        // Intentar consultar la API oficial con timeout de 10 segundos
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        
+        const response = await fetch(apiUrlOficial, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer TU_API_KEY_AQUI' // Si requiere autenticación
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 tipo_documento: datos.tipoDocumento,
                 numero_documento: datos.numeroDocumento,
-                tipo_examen: datos.tipoExamen,
-                periodo: datos.periodo
-            })
+                fecha_nacimiento: datos.fechaNacimiento
+            }),
+            signal: controller.signal
         });
         
-        if (!response.ok) {
-            throw new Error(`Error HTTP: ${response.status}`);
+        clearTimeout(timeoutId);
+        
+        if (response.ok) {
+            const resultado = await response.json();
+            console.log('✅ Resultados obtenidos del servidor oficial ICFES');
+            return resultado;
         }
         
-        const resultado = await response.json();
-        return resultado;
-        
     } catch (error) {
-        console.error('Error al consultar la API:', error);
-        throw error;
+        // Si hay error de red o timeout, usar base de datos local
+        console.warn('⚠️ Servidor oficial no disponible. Usando sistema de respaldo local.');
+        console.error('Detalles del error:', error.message);
     }
-    */
     
-    console.warn('⚠️ API real no configurada. Usando datos de demostración.');
     return null;
 }
 

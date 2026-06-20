@@ -379,6 +379,13 @@ body {
     font-weight: 600;
 }
 
+.materia-percentil {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
 .nivel-superior {
     background: #d4edda;
     color: #155724;

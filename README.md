@@ -59,23 +59,46 @@ Esta es una aplicación web responsive que permite a los estudiantes consultar s
 
 Para probar la aplicación, usa estos datos de ejemplo:
 
-### Ejemplo 1: Excelente Desempeño
+**Ejemplo 1 - Excelente Desempeño (Saber 11°)**
 - **Tipo de Documento:** CC
 - **Número:** 1234567890
-- **Tipo de Examen:** Saber 11°
-- **Período:** 2026-1
+- **Fecha Nacimiento:** 2005-03-15
 
-### Ejemplo 2: Buen Desempeño
+**Ejemplo 2 - Buen Desempeño (Saber 11°)**
 - **Tipo de Documento:** TI
 - **Número:** 9876543210
-- **Tipo de Examen:** Saber 11°
-- **Período:** 2025-2
+- **Fecha Nacimiento:** 2006-07-22
 
-### Ejemplo 3: Excelente Desempeño (Saber Pro)
+**Ejemplo 3 - Excelente Desempeño (Saber Pro)**
 - **Tipo de Documento:** CC
 - **Número:** 1111111111
-- **Tipo de Examen:** Saber Pro
-- **Período:** 2025-1
+- **Fecha Nacimiento:** 1998-12-10
+
+## 🔌 Backend con Node.js (Opcional)
+
+El sistema incluye un backend opcional que puede servir como **alternativa cuando el sitio oficial del ICFES no está disponible**.
+
+### Iniciar el Servidor
+
+```bash
+# Instalar dependencias
+npm install
+
+# Iniciar servidor (producción)
+npm start
+
+# Iniciar servidor (desarrollo con auto-reload)
+npm run dev
+```
+
+El servidor estará disponible en: `http://localhost:3000`
+
+### Endpoints Disponibles
+
+- **POST** `/api/consultar-resultados` - Consultar resultados
+- **GET** `/api/health` - Estado del servidor
+- **GET** `/api/check-official-site` - Verificar sitio oficial
+- **GET** `/api/stats` - Estadísticas del sistema
 
 ## 🔧 Estructura del Proyecto
 
@@ -84,7 +107,11 @@ icfes/
 │
 ├── index.html          # Estructura HTML principal
 ├── styles.css          # Estilos CSS completos
-├── script.js           # Lógica JavaScript
+├── script.js           # Lógica JavaScript frontend
+├── server.js           # Servidor Node.js backend (opcional)
+├── package.json        # Dependencias Node.js
+├── db.json             # Base de datos simulada
+├── .gitignore          # Archivos ignorados por git
 └── README.md           # Este archivo
 ```
 
